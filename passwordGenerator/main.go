@@ -25,30 +25,24 @@ var typeToAdd = TypeToAdd {
 func main() {
     var numberOfLetters, lettersErr = takeUserInput("Enter number of letters");
     var password string = "";
+    var numberOfNumbers, numbersErr = takeUserInput("Enter number of numbers");
+    var numberOfSymbols, symbolsErr = takeUserInput("Enter number of symbols");
 
     if handleError(lettersErr) {
-        return;
+        numberOfLetters = 0;
+    }
+    if handleError(numbersErr) {
+        numberOfNumbers = 0;
+    }
+    if handleError(symbolsErr) {
+        numberOfSymbols = 0;
     }
 
     password += addToPassword(numberOfLetters, typeToAdd.Letters);
-
-    var numberOfNumbers, numbersErr = takeUserInput("Enter number of numbers");
-
-    if handleError(numbersErr) {
-        return;
-    }
-
     password += addToPassword(numberOfNumbers, typeToAdd.Numbers);
-
-    var numberOfSymbols, symbolsErr = takeUserInput("Enter number of symbols");
-
-    if handleError(symbolsErr) {
-        return;
-    }
-
     password += addToPassword(numberOfSymbols, typeToAdd.Symbols);
 
-    println(shufflePassword(password));
+    println(shufflePassword(password), "      < --- Password");
 }
 
 func shufflePassword(password string) string {
@@ -81,7 +75,6 @@ func takeUserInput(msg string) (int, error) {
 
     println(msg);
     var input, err = reader.ReadString('\n');
-
     input = strings.TrimSpace(input);
 
     if err != nil {
@@ -90,11 +83,13 @@ func takeUserInput(msg string) (int, error) {
 
     var toNumber, convertError = strconv.Atoi(input);
 
-    if handleError(convertError) {
-        return 0, convertError;
-    }
+    return toNumber, convertError;
+}
 
-    return toNumber, err;
+func generateRandomNumberInRange(min int, max int) int {
+    var tempMax = max - min;
+
+    return rand.Intn(tempMax) + min;
 }
 
 func handleError(err error) bool {
@@ -105,10 +100,4 @@ func handleError(err error) bool {
     }
 
     return false;
-}
-
-func generateRandomNumberInRange(min int, max int) int8 {
-    var tempMax = max - min;
-
-    return int8(rand.Intn(tempMax) + min);
 }
