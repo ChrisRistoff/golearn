@@ -24,7 +24,7 @@ var typeToAdd = TypeToAdd {
 
 func main() {
     var numberOfLetters, lettersErr = takeUserInput("Enter number of letters");
-    var password string = "";
+    var password strings.Builder;
     var numberOfNumbers, numbersErr = takeUserInput("Enter number of numbers");
     var numberOfSymbols, symbolsErr = takeUserInput("Enter number of symbols");
 
@@ -38,11 +38,11 @@ func main() {
         numberOfSymbols = 0;
     }
 
-    password += addToPassword(numberOfLetters, typeToAdd.Letters);
-    password += addToPassword(numberOfNumbers, typeToAdd.Numbers);
-    password += addToPassword(numberOfSymbols, typeToAdd.Symbols);
+    password.WriteString(addToPassword(numberOfLetters, typeToAdd.Letters));
+    password.WriteString(addToPassword(numberOfNumbers, typeToAdd.Numbers));
+    password.WriteString(addToPassword(numberOfSymbols, typeToAdd.Symbols));
 
-    println(shufflePassword(password), "      < --- Password");
+    println(shufflePassword(password.String()), "      < --- Password");
 }
 
 func shufflePassword(password string) string {
@@ -60,14 +60,14 @@ func shufflePassword(password string) string {
 }
 
 func addToPassword(numberOfChars int, typeToAdd Range) string {
-    var result = "";
+    var result strings.Builder;
     var min, max = typeToAdd[0], typeToAdd[1];
 
     for range numberOfChars {
-        result += string(generateRandomNumberInRange(min, max));
+        result.WriteString(string(generateRandomNumberInRange(min, max)));
     }
 
-    return result;
+    return result.String();
 }
 
 func takeUserInput(msg string) (int, error) {
