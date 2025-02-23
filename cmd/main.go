@@ -67,5 +67,3 @@ func generateRandomNumberInRange(min int, max int) int8 {
     var tempMax = max - min;
     return int8(rand.Intn(tempMax) + min);
 }
-
-

@@ -1,4 +1,4 @@
-package main
+package passwordgenerator
 
 import (
 	"bufio"
@@ -23,10 +23,10 @@ var typeToAdd = TypeToAdd {
 }
 
 func main() {
-    var numberOfLetters, lettersErr = takeUserInput("Enter number of letters");
+    var numberOfLetters, lettersErr = TakeUserInput("Enter number of letters");
     var password strings.Builder;
-    var numberOfNumbers, numbersErr = takeUserInput("Enter number of numbers");
-    var numberOfSymbols, symbolsErr = takeUserInput("Enter number of symbols");
+    var numberOfNumbers, numbersErr = TakeUserInput("Enter number of numbers");
+    var numberOfSymbols, symbolsErr = TakeUserInput("Enter number of symbols");
 
     if handleError(lettersErr) {
         numberOfLetters = 0;
@@ -70,7 +70,7 @@ func addToPassword(numberOfChars int, typeToAdd Range) string {
     return result.String();
 }
 
-func takeUserInput(msg string) (int, error) {
+func TakeUserInput(msg string) (int, error) {
     var reader = bufio.NewReader(os.Stdin);
 
     println(msg);
